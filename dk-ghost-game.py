@@ -17,9 +17,7 @@ def play_round():
 
     while feeling_brave:
         ghost_door = randint(1, 3)
-        print("\nThree doors ahead ...")
-        print("A ghost behind one.")
-        print("Which door do you open?")
+        print("\nThree doors ahead ...\nA ghost behind one.\nWhich door do you open?")
         door = input("1, 2, or 3?\n")
 
         if door not in ["1", "2", "3"]:
@@ -57,13 +55,22 @@ def ask_replay():
 def main():
     """Main game loop."""
     print("Welcome to the Ghost Game! 👻")
+    high_score = 0
 
     while True:
-        play_round()
+        current_score = play_round()
+
+        if current_score > high_score:
+            high_score = current_score
+            print(f"\n🎉🎉🎉 New high score: {high_score}! 🎉🎉🎉")
+        else:
+            print(f"\nYour high score is {high_score}.")
+        
         if not ask_replay():
             break
 
     print("\nGoodbye! Thanks for playing!")
 
 
-main()
+if __name__ == "__main__":
+    main()
