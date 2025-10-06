@@ -1,46 +1,69 @@
 # Ghost Game
 
-from random import randint
+from random import randint, choice
 
-play_game = True
+safe_messages = [
+    "\nYou sneak through safely...",
+    "\nThe coast is clear!",
+    "\nPhew! No ghost this time.",
+    "\nYour heart’s racing... but nothing jumps out."
+]
 
-while play_game:
-    print("Ghost Game")
+
+def play_round():
+    """Play one round of the ghost game and return the score."""
     feeling_brave = True
     score = 0
-    
+
     while feeling_brave:
         ghost_door = randint(1, 3)
-        print("Three doors ahead ...")
+        print("\nThree doors ahead ...")
         print("A ghost behind one.")
         print("Which door do you open?")
-        door = input("1, 2, or 3? ")
-        
+        door = input("1, 2, or 3?\n")
+
         if door not in ["1", "2", "3"]:
-            print("Oops! That's not a choice.")
+            print("\nOops! That's not a choice.")
             continue
-        
+
         door_num = int(door)
         
         if door_num == ghost_door:
-            print("GHOST!")
+            print("\nGHOST! 👻")
             feeling_brave = False
         else:
-            print("No ghost!")
-            print("You enter the next room.")
+            print(choice(safe_messages))
             score += 1
-            
-    print("Run away!")
-    print("Game over! You scored", score)
 
-    replay = input("Do you want to play again? (Y/N) ").upper()
+    print("\nRun away!\n")
+    print(f"Game over! You scored {score}.")
+    return score
 
-    if replay == "Y":
-        play_game = True
-    if replay == "N":
-        play_game = False
-    elif replay != "Y":
-        print("Invalid input. Assuming you don't want to play.")
-        play_game = False
+
+def ask_replay():
+    """Ask the user if they want to play again, returning True or False."""
     
-print("Goodbye!")
+    while True:
+        replay = input("\nDo you want to play again? (Y/N)\n").strip().upper()
+        
+        if replay == "Y":
+            return True
+        elif replay == "N":
+            return False
+        else:
+            print("\nPlease enter Y or N.")
+
+
+def main():
+    """Main game loop."""
+    print("Welcome to the Ghost Game! 👻")
+
+    while True:
+        play_round()
+        if not ask_replay():
+            break
+
+    print("\nGoodbye! Thanks for playing!")
+
+
+main()
